@@ -2,36 +2,36 @@ import { createApp } from './vendor/vue.esm-browser.js';
 
 const API_URL = 'https://course-vue.javascript.ru/api';
 
-
 const vm = createApp({
   data() {
     return {
-      meetup: '',
+      meetupId: 0,
+      meetupName: '',
     };
   },
   methods: {
-    fetchMeetupById(meetupId) {
-      // console.log(meetupId)
-      return fetch(`${API_URL}/meetups/${meetupId}`).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.json().then((error) => {
-            throw error;
-          });
-        }
-      });
+    async fetchMeetupById(meetupId) {
+      
+      const response = await fetch(`${API_URL}/meetups/${meetupId}`);
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then((error) => {
+          throw error;
+        });
+      }
     }
   },
   watch: {
-    meetupSelect() {
-      console.log(id)
-      console.log(meetup)
-      //return this.fetchMeetupById(this.meetupID)
+    'meetupId': {
+      deep: true,
+      handler(newVAlue,oldValue){
+
+        this.fetchMeetupById(parseInt(this.meetupId)).then((selectMeetup) => {
+          this.meetupName = selectMeetup.title
+        });
+        
+      }
     }
-    
-  },
-  computed: {
-    
   }
   }).mount('#app');

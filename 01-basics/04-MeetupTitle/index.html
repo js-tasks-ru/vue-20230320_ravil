@@ -8,12 +8,10 @@
     <div id="app">
       <div>
         <label v-for="n in 5" :key="n">
-          <input type="radio" name="meetupId" @change="id = $event.target.value" :value="n" v-model="meetupId" /> {{n}}
+          <input type="radio" name="meetupId" :value="n" v-model="meetupId" /> {{n}}
         </label>
-     
         <hr />
-
-        <h3>MEETUP_TITLE</h3>
+        <h3>{{meetupName}}</h3>
       </div>
     </div>
 
