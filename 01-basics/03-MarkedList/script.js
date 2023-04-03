@@ -1,3 +1,4 @@
+/* eslint-disable vue/return-in-computed-property */
 import { createApp } from './vendor/vue.esm-browser.js';
 
 // From https://jsonplaceholder.typicode.com/comments
@@ -33,16 +34,14 @@ const emails = [
 const vm = createApp({
   data() {
     return {
-      email: emails,
-      selected: ''
+      emails: emails,
+      search: '',
     };
   },
-  methods: {
-    selectedEmail() {
-
-    }
-  },
   computed: {
-    
+    filteredEmail() {
+        if(this.search.length>0)
+          return this.emails.filter(s => s.toLowerCase().includes(this.search))
+    }
   }
   }).mount('#app');
