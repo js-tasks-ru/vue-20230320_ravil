@@ -17,6 +17,14 @@ export default defineComponent({
       require: true,
     },
   },
+  methods:{
+    formatLocaleString(date){
+      return new Date(date).toLocaleDateString("ru-RU")
+    },
+    formatIsoDate(date){
+      return new Date(date).toISOString().split('T')[0]
+    },
+  },
   template: `
     <ul class="meetup-info">
       <li>
@@ -26,10 +34,11 @@ export default defineComponent({
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-map.svg" />
         {{ place }}
+        {{}}
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time datetime="2020-01-01">{{ new Date(date).toLocaleDateString("ru-RU") }} г.</time>
+        <time :datetime="formatIsoDate(date)">{{ formatLocaleString(date) }} г.</time>
       </li>
     </ul>`,
 });
