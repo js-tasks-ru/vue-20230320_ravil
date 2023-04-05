@@ -7,22 +7,24 @@ export default defineComponent({
         type: Number,
         default: () => 0,
       },
-      setCount: {
-        type: Function,
-        require: true
-    },
+      // setCount: {
+      //   type: Function,
+      //   require: true
+      // },
   },
   methods: {
-    
+    // send(value){
+    //   this.count = value + 1
+    //   return this.setCount()
+    // }
   },
   computed: {
-    send(value) {
-      console.log(value)
-      this.setCount(value + 1)
-      //return value + 1
-    }
+    // setCount() {
+    //   //console.log(this.count)
+    //   return this.count
+    // }
   },
   // Компонент должен иметь входной параметр и порождать событие
 
-  template: `<button type="button" @click="send(count)">{{count}}</button>`,
+  template: `<button type="button" @click="$emit('update:count',count + 1)">{{count}}</button>`,
 });
