@@ -17,10 +17,10 @@
           <input type="search" name="search" v-model="search"/>
         </div>
         <ul>
-          <li v-for="mail in emails"
+          <li v-for="mail in filteredEmail"
             :class="{
-            'marked' : filteredEmail && filteredEmail.find(i => i == mail)
-            }">{{mail}}</li>
+            'marked' : mail.marked
+            }">{{ mail.name }}</li>
         </ul>
       </div>
     </div>

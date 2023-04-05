@@ -30,7 +30,6 @@ const emails = [
   'Isaias_Kuhic@jarrett.net',
 ];
 
-// Требуется создать Vue приложение
 const vm = createApp({
   data() {
     return {
@@ -40,8 +39,17 @@ const vm = createApp({
   },
   computed: {
     filteredEmail() {
-        if(this.search.length>0)
-          return this.emails.filter(s => s.toLowerCase().includes(this.search))
+      let search = this.search
+      let element = [];
+      emails.forEach(function(item, i, array) {
+
+        let object =  {
+          'name': item,
+          'marked': search && item.toLowerCase().indexOf(search) != -1
+        }
+        element[i] = object;
+      });
+      return element
     }
   }
   }).mount('#app');
