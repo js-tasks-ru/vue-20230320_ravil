@@ -13,13 +13,18 @@ export default defineComponent({
       require: true,
     },
     date: {
-      type: isInteger,
+      type: Number,
       require: true,
     },
   },
   methods:{
     formatLocaleString(date){
-      return new Date(date).toLocaleDateString("ru-RU")
+     
+      return new Date(date).toLocaleDateString(navigator.language, {
+        year: 'numeric',
+        month:'long',
+        day: 'numeric',
+      })
     },
     formatIsoDate(date){
       return new Date(date).toISOString().split('T')[0]
@@ -38,7 +43,7 @@ export default defineComponent({
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="formatIsoDate(date)">{{ formatLocaleString(date) }} г.</time>
+        <time :datetime="formatIsoDate(date)">{{ formatLocaleString(date) }}</time>
       </li>
     </ul>`,
 });
