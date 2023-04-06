@@ -1,4 +1,5 @@
-// import { createApp } from './vendor/vue.esm-browser.js';
+/* eslint-disable vue/return-in-computed-property */
+import { createApp } from './vendor/vue.esm-browser.js';
 
 // From https://jsonplaceholder.typicode.com/comments
 const emails = [
@@ -29,4 +30,26 @@ const emails = [
   'Isaias_Kuhic@jarrett.net',
 ];
 
-// Требуется создать Vue приложение
+const vm = createApp({
+  data() {
+    return {
+      emails: emails,
+      search: '',
+    };
+  },
+  computed: {
+    filteredEmail() {
+      let search = this.search
+      let element = [];
+      emails.forEach(function(item, i, array) {
+
+        let object =  {
+          'name': item,
+          'marked': search && item.toLowerCase().indexOf(search) != -1
+        }
+        element[i] = object;
+      });
+      return element
+    }
+  }
+  }).mount('#app');
