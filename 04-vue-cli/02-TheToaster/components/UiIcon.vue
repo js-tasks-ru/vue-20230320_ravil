@@ -39,6 +39,8 @@ const icons = {
   trash: Trash,
   tv: Tv,
   user: User,
+  info: Check,
+  warning: Check,
 };
 
 export default {
