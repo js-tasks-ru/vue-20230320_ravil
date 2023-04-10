@@ -1,16 +1,16 @@
 <template>
   <div class="dropdown " :class="{'dropdown_opened' : modelValue}">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
+    <button type="button" class="dropdown__toggle dropdown__toggle_icon" @click="selectedType">
       <UiIcon icon="tv" class="dropdown__icon" />
-      <span>{{ title }}</span>
+      <span>{{ toggleTitle }}</span>
     </button>
 
-    <div class="dropdown__menu" style="display:none" role="listbox">
+    <div class="dropdown__menu" :style="!opened ? 'display:none':''" role="listbox">
       <button v-for="option of options" :key="option.value"
               class="dropdown__item dropdown__item_icon" 
               role="option" 
               type="button"
-              v-show="modelValue == option.value"
+              @update="selectedType=option.value"
           >
         <UiIcon icon="tv" class="dropdown__icon" />
         {{ option.text }}
@@ -44,6 +44,9 @@ export default {
   },
   components: { UiIcon },
   computed: {
+    toggleTitle(){
+        return this.modelValue ? this.modelValue : this.title
+    },
     selectedType(){
         console.log(this.opened)
         this.opened = true
