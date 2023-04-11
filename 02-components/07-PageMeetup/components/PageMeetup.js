@@ -14,9 +14,9 @@ export default defineComponent({
   },
   data() {
     return {
-      meetup: {},
+      meetup: null,
       loading: false,
-      error: ''
+      error: false
     }
   },
   components: {
@@ -25,40 +25,40 @@ export default defineComponent({
     MeetupView
   },
   methods: {
-    async fetchMeetup(id){
+    getMeetup(){
       this.loading = false
       this.error = false
-      try {
-        let getMeetup = await fetchMeetupById(id);
-        this.meetup = getMeetup
+      
+      fetchMeetupById(this.meetupId).then((meetup) => {
+        this.meetup = meetup
         this.loading = true
-       
-      } catch(err) {
+      }).catch((f)=>{
         this.error = true
-        this.meetup = {}
-        this.loading = true
-      }
-
+      });
     }
   },
   created() {
-    this.fetchMeetup(this.meetupId)
+    this.getMeetup()
+  },
+  watch: {
+    'meetupId': {
+      handler(){
+        this.getMeetup()
+      }
+    }
   },
   computed: {
-    getMeetup() {
-     return this.fetchMeetup(parseInt(this.meetupId))
-    },
   },
   template: `
     <div class="page-meetup">
-      <MeetupView v-if="loading && meetup && !error" :meetup="meetup" v-model="getMeetup"></MeetupView>
+      <MeetupView v-if="loading && meetup" :meetup="meetup"></MeetupView>
 
-      <UiContainer v-if="!loading">
-        <UiAlert :text="'Загрузка...'"><template v-slot:dafault></template></UiAlert>
+      <UiContainer v-if="!loading && !error">
+        <UiAlert :text="'Загрузка...'"></UiAlert>
       </UiContainer>
 
-      <UiContainer v-else>
-        <UiAlert :text="'Test Error'"><template v-slot:dafault></template></UiAlert>
+      <UiContainer v-if="error">
+        <UiAlert :text="'Test Error'"></UiAlert>
       </UiContainer>
 
      
