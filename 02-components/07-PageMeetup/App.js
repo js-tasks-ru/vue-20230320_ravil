@@ -7,7 +7,7 @@ export default defineComponent({
   components: { PageMeetup },
   data() {
     return {
-      meetupId: 2,
+      meetupId: 1,
     };
   },
 

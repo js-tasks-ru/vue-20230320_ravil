@@ -16,7 +16,7 @@ export default defineComponent({
     return {
       meetup: null,
       loading: false,
-      error: false
+      error: ''
     }
   },
   components: {
@@ -27,13 +27,12 @@ export default defineComponent({
   methods: {
     getMeetup(){
       this.loading = false
-      this.error = false
-      
+      this.error = ''
       fetchMeetupById(this.meetupId).then((meetup) => {
         this.meetup = meetup
         this.loading = true
       }).catch((f)=>{
-        this.error = true
+        this.error = f.message
       });
     }
   },
@@ -58,7 +57,7 @@ export default defineComponent({
       </UiContainer>
 
       <UiContainer v-if="error">
-        <UiAlert :text="'Test Error'"></UiAlert>
+        <UiAlert :text="error"></UiAlert>
       </UiContainer>
 
      
