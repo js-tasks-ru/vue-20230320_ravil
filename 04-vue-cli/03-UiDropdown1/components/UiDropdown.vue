@@ -1,22 +1,27 @@
 <template>
   <div class="dropdown " :class="{'dropdown_opened' : opened}">
-    <button type="button" class="dropdown__toggle" :class="{'dropdown__toggle_icon': useIcons}" @click="handler()">
+    <button type="button" class="dropdown__toggle" :class="{'dropdown__toggle_icon': useIcons}" @click="opened = !opened" >
       <UiIcon v-if="useIcons && selectOption" class="dropdown__icon" :icon="selectOption.icon"/>
       <span>{{ toggleTitle }}</span>
     </button>
-    <div class="dropdown__menu" :style="!opened ? 'display:none':''" role="listbox">
+    <div v-show="opened" class="dropdown__menu" role="listbox">
       <button v-for="option of options" :key="option.value"
               class="dropdown__item" 
               :class="{'dropdown__item_icon': useIcons}"
               role="option" 
               type="button"
               :value="option.value"
-              @click="setOptions(option.value)"
+              @click="setOption"
           >
         <UiIcon v-if="useIcons && option.icon" :icon="option.icon" class="dropdown__icon" />
         {{ option.text }} 
       </button>
     </div>
+    <select v-show="true" v-model="selected" @change="setOption">
+      <option v-for="option of options" :key="option.value" 
+        :value="option.value"
+        >{{ option.text }} </option>
+    </select>
   </div>
 </template>
 
@@ -28,8 +33,7 @@ export default {
   data(){
     return {
       opened: false,
-      useIcons: false,
-      selectOption: null
+      selected: null,
     }
   },
   props: {
@@ -46,32 +50,24 @@ export default {
     }
   },
   components: { UiIcon },
-  emits: ['update:modelValue','change'],
+  emits: ['update:modelValue'],
   methods: {
-    handler(){
-
-      if(this.options.length > 0){
-        this.opened = !this.opened;
-      }
+    setOption(event){
+      this.opened = !this.opened;
+      this.$emit('update:modelValue', event.target.value)
+      
     },
-    setOptions(e){
-      this.$emit('update:modelValue', e)
-        this.opened = false
-        this.selectOption = this.options.find(item => item.value == e)
-    },
-  },
-  mounted() {
-    this.useIcons = this.options.some(e => e.icon !== undefined)
   },
   computed: {
-    // selectOption(){
-    //   this.opened = false
-    //   console.log(this.modelValue)
-    //   //return this.selectOption = this.options.find(item => item.value == this.modelValue)
-    // },
-    toggleTitle(){
-      let setValue = this.options.find(item => item.value == this.modelValue)
-      return setValue ? setValue.text : this.title
+    useIcons (){
+      return this.options.some(e => e.icon !== undefined)
+    },
+    selectOption(){
+      this.selected = this.modelValue
+      return this.options.find(item => item.value == this.modelValue)
+    },
+   toggleTitle(){
+      return this.selectOption ? this.selectOption.text : this.title
     },
   }
 };
