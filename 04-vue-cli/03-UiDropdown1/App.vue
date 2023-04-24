@@ -89,7 +89,7 @@ export default {
         { value: 'without-icon', text: 'Without icon' },
       ],
 
-      selectedLang: 'EN',
+      selectedLang: 'RU',
       selectedType: undefined,
       selectedMixed: undefined,
     };

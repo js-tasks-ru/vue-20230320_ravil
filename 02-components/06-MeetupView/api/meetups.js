@@ -533,7 +533,7 @@ export default [
     date: 1587513600000,
     organizer: 'Eugeny F.',
     place: 'Москва, Физтехпарк, офис Acronis',
-    agenda: [
+    agenda: null/*[
       {
         id: 28,
         startsAt: '18:30',
@@ -608,6 +608,6 @@ export default [
         speaker: null,
         language: null,
       },
-    ],
+    ],*/
   },
 ];
