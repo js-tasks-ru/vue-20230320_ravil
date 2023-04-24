@@ -17,7 +17,7 @@
         {{ option.text }} 
       </button>
     </div>
-    <select v-show="true" @change="setOption">
+    <select v-show="false" @change="setOption">
       <option v-for="option of options" :key="option.value" 
         :value="option.value"
         :selected="this.modelValue==option.value"
