@@ -17,9 +17,10 @@
         {{ option.text }} 
       </button>
     </div>
-    <select v-show="true" v-model="selected" @change="setOption">
+    <select v-show="true" @change="setOption">
       <option v-for="option of options" :key="option.value" 
         :value="option.value"
+        :selected="this.modelValue==option.value"
         >{{ option.text }} </option>
     </select>
   </div>
@@ -33,7 +34,6 @@ export default {
   data(){
     return {
       opened: false,
-      selected: null,
     }
   },
   props: {
@@ -55,7 +55,6 @@ export default {
     setOption(event){
       this.opened = !this.opened;
       this.$emit('update:modelValue', event.target.value)
-      
     },
   },
   computed: {
@@ -63,7 +62,6 @@ export default {
       return this.options.some(e => e.icon !== undefined)
     },
     selectOption(){
-      this.selected = this.modelValue
       return this.options.find(item => item.value == this.modelValue)
     },
    toggleTitle(){
