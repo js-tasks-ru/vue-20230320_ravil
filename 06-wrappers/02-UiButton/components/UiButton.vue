@@ -1,10 +1,29 @@
 <template>
-  <button class="button button_secondary button_block">BUTTON</button>
+  <component :is="tag" v-bind="$attrs" class="button"
+  :class="[`button_${variant}`, {'button_block': block }]"
+  :type="$attrs.type ? $attrs.type : ( tag=='button' ? 'button' : null)" 
+  ><slot/></component>
 </template>
 
 <script>
 export default {
   name: 'UiButton',
+  inheritAttrs: false,
+  props: {
+    tag: {
+      type: [String, Object, Function],
+      required: false,
+      default: 'button',
+    },
+    variant:{
+      type: String,
+      required: false,
+      default: 'secondary',
+    },
+    block:{
+      type: Boolean
+    }
+  }
 };
 </script>
 
